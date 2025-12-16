@@ -1,0 +1,108 @@
+name: Sync Guides from turkiye-api-docs
+
+on:
+  # Run daily at 2 AM UTC
+  schedule:
+    - cron: "0 2 * * *"
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+  # Run when this workflow file is modified
+  push:
+    paths:
+      - ".github/workflows/sync-guides.yml"
+
+jobs:
+  sync-guides:
+    name: Sync Documentation Guides
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Clone turkiye-api-docs
+        run: |
+          mkdir -p temp
+          git clone https://github.com/ubeydeozdmr/turkiye-api-docs.git temp/turkiye-api-docs-sync
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          # Compare the two directories
+          if ! diff -rq temp/turkiye-api-docs-sync guides > /dev/null 2>&1; then
+            echo "changes_detected=true" >> $GITHUB_OUTPUT
+            echo "✨ Changes detected in turkiye-api-docs"
+          else
+            echo "changes_detected=false" >> $GITHUB_OUTPUT
+            echo "✅ Guides are already up to date"
+          fi
+
+      - name: Backup current guides
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        run: |
+          BACKUP_DIR="temp/guides-backup-$(date +%Y%m%d-%H%M%S)"
+          echo "💾 Backing up current guides to $BACKUP_DIR"
+          cp -r guides "$BACKUP_DIR"
+
+      - name: Update guides
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        run: |
+          echo "🔄 Updating guides folder..."
+
+          # Remove old content (preserve .gitkeep if exists)
+          find guides -mindepth 1 -delete 2>/dev/null || true
+
+          # Copy new content (exclude .git directory)
+          rsync -av --exclude='.git' --exclude='.github' temp/turkiye-api-docs-sync/ guides/
+
+          echo "✅ Guides updated successfully!"
+
+      - name: Get latest commit info from upstream
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        id: upstream_info
+        run: |
+          cd temp/turkiye-api-docs-sync
+          LATEST_COMMIT=$(git log -1 --format="%h - %s")
+          echo "latest_commit=$LATEST_COMMIT" >> $GITHUB_OUTPUT
+          cd ../..
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        run: |
+          git add guides/
+          git commit -m "docs: sync guides from turkiye-api-docs
+
+          Synced from: https://github.com/ubeydeozdmr/turkiye-api-docs
+          Latest upstream commit: ${{ steps.upstream_info.outputs.latest_commit }}
+
+          🤖 Auto-synced by GitHub Actions"
+
+          git push
+
+      - name: Create summary
+        if: always()
+        run: |
+          echo "## 📚 Guides Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.check_changes.outputs.changes_detected }}" == "true" ]; then
+            echo "✅ **Status**: Guides updated successfully" >> $GITHUB_STEP_SUMMARY
+            echo "🔗 **Upstream**: [turkiye-api-docs](https://github.com/ubeydeozdmr/turkiye-api-docs)" >> $GITHUB_STEP_SUMMARY
+            echo "📝 **Latest commit**: ${{ steps.upstream_info.outputs.latest_commit }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ **Status**: Guides are already up to date" >> $GITHUB_STEP_SUMMARY
+            echo "🔗 **Upstream**: [turkiye-api-docs](https://github.com/ubeydeozdmr/turkiye-api-docs)" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⏰ **Next scheduled sync**: Daily at 2:00 AM UTC" >> $GITHUB_STEP_SUMMARY
