@@ -1,0 +1,205 @@
+name: Sync Data from turkiye-api
+
+on:
+  # Run weekly on Sunday at 3 AM UTC
+  schedule:
+    - cron: "0 3 * * 0"
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+  # Run when this workflow file is modified
+  push:
+    paths:
+      - ".github/workflows/sync-data.yml"
+
+jobs:
+  sync-data:
+    name: Sync Application Data Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Clone turkiye-api repository
+        run: |
+          mkdir -p temp
+          git clone https://github.com/ubeydeozdmr/turkiye-api.git temp/turkiye-api-sync
+
+      - name: Check for data changes
+        id: check_changes
+        run: |
+          # Compare data directories
+          if ! diff -rq temp/turkiye-api-sync/src/data app/data > /dev/null 2>&1; then
+            echo "changes_detected=true" >> $GITHUB_OUTPUT
+            echo "✨ Data changes detected in turkiye-api"
+
+            # Show what changed
+            echo "## Changed Files:" >> $GITHUB_STEP_SUMMARY
+            diff -rq temp/turkiye-api-sync/src/data app/data || true
+          else
+            echo "changes_detected=false" >> $GITHUB_OUTPUT
+            echo "✅ Data files are already up to date"
+          fi
+
+      - name: Backup current data
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        run: |
+          BACKUP_DIR="temp/data-backup-$(date +%Y%m%d-%H%M%S)"
+          echo "💾 Backing up current data to $BACKUP_DIR"
+          mkdir -p "$BACKUP_DIR"
+          cp -r app/data "$BACKUP_DIR/"
+
+      - name: Update data files
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        run: |
+          echo "🔄 Updating data files..."
+
+          # Remove old data files
+          rm -rf app/data/*
+
+          # Copy new data files
+          cp -r temp/turkiye-api-sync/src/data/* app/data/
+
+          echo "✅ Data files updated successfully!"
+
+          # Show updated file list
+          echo "## Updated Data Files:" >> $GITHUB_STEP_SUMMARY
+          ls -lh app/data/ >> $GITHUB_STEP_SUMMARY
+
+      - name: Validate data files
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        run: |
+          echo "🔍 Validating data files..."
+
+          # Check that required JSON files exist
+          REQUIRED_FILES=("provinces.json" "districts.json")
+          MISSING_FILES=0
+
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "app/data/$file" ]; then
+              echo "❌ Missing required file: $file"
+              MISSING_FILES=$((MISSING_FILES + 1))
+            else
+              # Validate JSON format
+              if ! python3 -m json.tool "app/data/$file" > /dev/null 2>&1; then
+                echo "❌ Invalid JSON in file: $file"
+                MISSING_FILES=$((MISSING_FILES + 1))
+              else
+                echo "✅ Valid: $file"
+              fi
+            fi
+          done
+
+          if [ $MISSING_FILES -gt 0 ]; then
+            echo "❌ Validation failed: $MISSING_FILES file(s) missing or invalid"
+            exit 1
+          fi
+
+          echo "✅ All data files validated successfully"
+
+      - name: Get file sizes and counts
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        id: data_stats
+        run: |
+          # Get file count
+          FILE_COUNT=$(find app/data -type f -name "*.json" | wc -l)
+          echo "file_count=$FILE_COUNT" >> $GITHUB_OUTPUT
+
+          # Get total size
+          TOTAL_SIZE=$(du -sh app/data | cut -f1)
+          echo "total_size=$TOTAL_SIZE" >> $GITHUB_OUTPUT
+
+          # Count records in each file (if possible)
+          echo "## Data Statistics:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| File | Size | Records |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|------|---------|" >> $GITHUB_STEP_SUMMARY
+
+          for jsonfile in app/data/*.json; do
+            if [ -f "$jsonfile" ]; then
+              SIZE=$(du -h "$jsonfile" | cut -f1)
+              FILENAME=$(basename "$jsonfile")
+
+              # Try to count records (assuming array or object)
+              RECORDS=$(python3 -c "import json; data=json.load(open('$jsonfile')); print(len(data) if isinstance(data, (list, dict)) else 'N/A')" 2>/dev/null || echo "N/A")
+
+              echo "| $FILENAME | $SIZE | $RECORDS |" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+      - name: Get latest commit info from upstream
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        id: upstream_info
+        run: |
+          cd temp/turkiye-api-sync
+          LATEST_COMMIT=$(git log -1 --format="%h - %s" -- src/data)
+          COMMIT_DATE=$(git log -1 --format="%ci" -- src/data)
+          echo "latest_commit=$LATEST_COMMIT" >> $GITHUB_OUTPUT
+          echo "commit_date=$COMMIT_DATE" >> $GITHUB_OUTPUT
+          cd ../..
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        run: |
+          git add app/data/
+
+          # Create detailed commit message
+          cat > commit_msg.txt << 'EOF'
+          data: sync application data from turkiye-api
+
+          Synced from: https://github.com/ubeydeozdmr/turkiye-api/tree/main/src/data
+          Latest upstream commit: ${{ steps.upstream_info.outputs.latest_commit }}
+          Commit date: ${{ steps.upstream_info.outputs.commit_date }}
+
+          Files updated: ${{ steps.data_stats.outputs.file_count }}
+          Total size: ${{ steps.data_stats.outputs.total_size }}
+
+          🤖 Auto-synced by GitHub Actions
+          EOF
+
+          git commit -F commit_msg.txt
+          git push
+
+      - name: Create summary
+        if: always()
+        run: |
+          echo "# 📊 Data Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.check_changes.outputs.changes_detected }}" == "true" ]; then
+            echo "✅ **Status**: Data files updated successfully" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Details**:" >> $GITHUB_STEP_SUMMARY
+            echo "- 🔗 **Upstream**: [turkiye-api/src/data](https://github.com/ubeydeozdmr/turkiye-api/tree/main/src/data)" >> $GITHUB_STEP_SUMMARY
+            echo "- 📝 **Latest commit**: ${{ steps.upstream_info.outputs.latest_commit }}" >> $GITHUB_STEP_SUMMARY
+            echo "- 📅 **Commit date**: ${{ steps.upstream_info.outputs.commit_date }}" >> $GITHUB_STEP_SUMMARY
+            echo "- 📁 **Files updated**: ${{ steps.data_stats.outputs.file_count }}" >> $GITHUB_STEP_SUMMARY
+            echo "- 💾 **Total size**: ${{ steps.data_stats.outputs.total_size }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ **Status**: Data files are already up to date" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- 🔗 **Upstream**: [turkiye-api/src/data](https://github.com/ubeydeozdmr/turkiye-api/tree/main/src/data)" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⏰ **Next scheduled sync**: Weekly on Sunday at 3:00 AM UTC" >> $GITHUB_STEP_SUMMARY
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "## ❌ Data Sync Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The data sync process encountered an error." >> $GITHUB_STEP_SUMMARY
+          echo "Please check the logs above for details." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Action needed**: Manual intervention may be required." >> $GITHUB_STEP_SUMMARY
