@@ -3,7 +3,6 @@ i18n Localization Loader
 Loads and caches translation files for multi-language support
 """
 import json
-import os
 from pathlib import Path
 from typing import Any, Dict, Optional
 
