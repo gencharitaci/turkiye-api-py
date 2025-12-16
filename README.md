@@ -31,7 +31,7 @@ This is a Python/FastAPI implementation based on the original [turkiye-api](http
 ### Quality & DevOps 🧪🚀
 
 - **Comprehensive Testing**: 80+ tests across all layers (data, services, API, middleware)
-- **CI/CD Pipeline**: GitHub Actions workflow with test, lint, security, and build jobs
+- **Automated Workflows**: GitHub Actions for data and documentation synchronization
 - **Pre-commit Hooks**: Automated code quality checks (Black, isort, flake8, Bandit, mypy)
 - **Code Quality**: 9.0/10 quality score with excellent maintainability
 - **Production Ready**: Docker, Gunicorn, comprehensive deployment guides, and production config templates
@@ -422,7 +422,6 @@ turkiye-api-py/
 │   └── sync-guides.bat       # Guides sync script (Windows)
 ├── .github/
 │   └── workflows/
-│       ├── ci.yml            # CI/CD pipeline (NEW)
 │       ├── sync-data.yml     # Data sync workflow (NEW)
 │       └── sync-guides.yml   # Guides sync workflow (NEW)
 ├── requirements.txt          # Python dependencies
@@ -476,7 +475,7 @@ turkiye-api-py/
 ### DevOps & Monitoring
 
 - **Docker**: Containerization
-- **GitHub Actions**: CI/CD pipeline
+- **GitHub Actions**: Automated data and documentation synchronization
 - **Prometheus**: Metrics collection
 - **Pre-commit**: Git hooks for code quality
 
@@ -540,7 +539,7 @@ Contributions are welcome! This project maintains high quality standards with co
 7. **Create Pull Request**
    - Provide clear description of changes
    - Reference any related issues
-   - Ensure all CI checks pass
+   - Ensure all tests and quality checks pass locally
 
 ### Coding Standards
 
@@ -560,9 +559,9 @@ Contributions are welcome! This project maintains high quality standards with co
 - ✅ Update CHANGELOG.md for notable changes
 - ✅ For major changes, open an issue first to discuss
 
-### Running CI Locally
+### Running Quality Checks Locally
 
-The CI pipeline runs automatically on push, but you can verify locally:
+Run these checks locally before committing to ensure code quality:
 
 ```bash
 # Test matrix (Python 3.8-3.11)

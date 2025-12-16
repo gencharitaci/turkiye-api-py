@@ -31,7 +31,7 @@ Bu, [Adem Kurtipek](https://github.com/ubeydeozdmr) tarafından geliştirilen or
 ### Kalite & DevOps 🧪🚀
 
 - **Kapsamlı Test**: Tüm katmanlarda 80+ test (data, services, API, middleware)
-- **CI/CD Pipeline**: Test, lint, security ve build işleri ile GitHub Actions workflow
+- **Otomatik İş Akışları**: Veri ve dokümantasyon senkronizasyonu için GitHub Actions
 - **Pre-commit Hooks**: Otomatik kod kalitesi kontrolleri (Black, isort, flake8, Bandit, mypy)
 - **Kod Kalitesi**: Mükemmel sürdürülebilirlik ile 9.0/10 kalite skoru
 - **Production Hazır**: Docker, Gunicorn, kapsamlı deployment rehberleri ve production config şablonları
@@ -359,7 +359,7 @@ tests/
 - ✅ API endpoint'leri (tüm HTTP metodları ve hata durumları)
 - ✅ Güvenlik middleware (tüm OWASP başlıkları)
 
-Detaylı test rehberi için [TESTING.md](TESTING.md) dosyasına bakın.
+Detaylı test rehberi için [TESTING.md](docs/TESTING.md) dosyasına bakın.
 
 ## Proje Yapısı
 
@@ -399,7 +399,6 @@ turkiye-api-py/
 │   └── sync-guides.bat       # Rehber senkronizasyon scripti (Windows)
 ├── .github/
 │   └── workflows/
-│       ├── ci.yml            # CI/CD pipeline (YENİ)
 │       ├── sync-data.yml     # Veri senkronizasyon workflow (YENİ)
 │       └── sync-guides.yml   # Rehber senkronizasyon workflow (YENİ)
 ├── requirements.txt          # Python bağımlılıkları
@@ -456,7 +455,7 @@ turkiye-api-py/
 ### DevOps & İzleme
 
 - **Docker**: Containerization
-- **GitHub Actions**: CI/CD pipeline
+- **GitHub Actions**: Otomatik veri ve dokümantasyon senkronizasyonu
 - **Prometheus**: Metrik toplama
 - **Pre-commit**: Kod kalitesi için git hooks
 
@@ -520,7 +519,7 @@ Katkılar memnuniyetle karşılanır! Bu proje kapsamlı test ve otomatik kalite
 7. **Pull Request Oluşturun**
    - Değişikliklerin net açıklamasını sağlayın
    - İlgili issue'lara referans verin
-   - Tüm CI kontrollerinin geçtiğinden emin olun
+   - Tüm testlerin ve kalite kontrollerinin yerel olarak geçtiğinden emin olun
 
 ### Kodlama Standartları
 
@@ -540,9 +539,9 @@ Katkılar memnuniyetle karşılanır! Bu proje kapsamlı test ve otomatik kalite
 - ✅ Önemli değişiklikler için CHANGELOG.md güncelleyin
 - ✅ Büyük değişiklikler için önce bir issue açın
 
-### CI'ı Yerel Olarak Çalıştırma
+### Kalite Kontrollerini Yerel Olarak Çalıştırma
 
-CI pipeline push'ta otomatik çalışır, ancak yerel olarak doğrulayabilirsiniz:
+Kod kalitesini sağlamak için commit öncesi bu kontrolleri yerel olarak çalıştırın:
 
 ```bash
 # Test matrisi (Python 3.8-3.11)
