@@ -1,0 +1,85 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+*.so
+.Python
+
+# Package/Build artifacts
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.editorconfig
+
+# Environment files (use docker-compose env vars)
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Development tools
+.claude/
+.serena/
+*.claude
+temp/
+.pre-commit-config.yaml
+
+# CI/CD
+.github/
+
+# Testing
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+pytest.ini
+*.log
+
+# Documentation (keep only essential)
+*.md
+!README.md
+!LICENSE
+guides/
+
+# Scripts (production uses gunicorn directly)
+sync-guides.sh
+sync-guides.bat
+start-production.sh
+start-production.bat
+run.py
+
+# Backup files
+*.bak
+*.tmp
+*.swp
+
+# Logs
+logs/
+*.log

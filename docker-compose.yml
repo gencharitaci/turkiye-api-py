@@ -1,0 +1,84 @@
+version: "3.8"
+
+services:
+  # Redis cache service (recommended for production)
+  redis:
+    image: redis:7-alpine
+    container_name: turkiye-api-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - turkiye-api-py-network
+    command: redis-server --appendonly yes
+
+  # Main API service
+  api:
+    build: .
+    container_name: turkiye-api-py
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8181}:8181"
+    environment:
+      # Application
+      - HOST=0.0.0.0
+      - PORT=8181
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - WORKERS=${WORKERS:-4}
+
+      # Security (IMPORTANT: Set these in .env file)
+      - EXPOSE_SERVER_HEADER=${EXPOSE_SERVER_HEADER:-false}
+      - HEALTH_CHECK_DETAILED=${HEALTH_CHECK_DETAILED:-false}
+      - HEALTH_CHECK_AUTH_ENABLED=${HEALTH_CHECK_AUTH_ENABLED:-false}
+      - HEALTH_CHECK_USERNAME=${HEALTH_CHECK_USERNAME:-admin}
+      - HEALTH_CHECK_PASSWORD=${HEALTH_CHECK_PASSWORD}
+
+      # Redis (for caching and rate limiting)
+      - REDIS_URL=redis://redis:6379/0
+
+      # Rate Limiting
+      - RATE_LIMIT_ENABLED=${RATE_LIMIT_ENABLED:-true}
+      - RATE_LIMIT_PER_MINUTE=${RATE_LIMIT_PER_MINUTE:-100}
+
+      # Logging
+      - LOG_LEVEL=${LOG_LEVEL:-warning}
+      - LOG_FORMAT=${LOG_FORMAT:-json}
+
+      # CORS
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
+    volumes:
+      # Mount data directory as read-only
+      - ./app/data:/app/app/data:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8181/health')",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - turkiye-api-py-network
+
+networks:
+  turkiye-api-py-network:
+    driver: bridge
+
+volumes:
+  redis_data:
+    driver: local
