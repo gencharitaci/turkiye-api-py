@@ -4,6 +4,7 @@ Structured logging configuration for production-grade observability.
 This module configures JSON-based structured logging for the application,
 making logs machine-parseable for analysis tools like Elasticsearch, Datadog, etc.
 """
+
 import logging
 import os
 import sys
