@@ -28,18 +28,35 @@ class CacheService:
         self.enabled = False
         self.redis_client = None
 
-        # Only initialize Redis if URL is configured and not default
+        # Only initialize Redis if URL is configured and not using default localhost
         if settings.redis_url and settings.redis_url != "redis://localhost:6379":
             try:
                 import redis
 
                 self.redis_client = redis.from_url(
-                    settings.redis_url, decode_responses=True, socket_connect_timeout=2, socket_timeout=2
+                    settings.redis_url,
+                    decode_responses=True,
+                    socket_connect_timeout=5,  # Increased from 2s to 5s for better reliability
+                    socket_timeout=5,
+                    retry_on_timeout=True,  # Added retry on timeout
+                    health_check_interval=30,  # Added health check
                 )
-                # Test connection
-                self.redis_client.ping()
-                self.enabled = True
-                logger.info(f"Cache service initialized with Redis: {settings.redis_url}")
+                # Test connection with retry
+                max_retries = 3
+                for attempt in range(max_retries):
+                    try:
+                        self.redis_client.ping()
+                        self.enabled = True
+                        logger.info(f"Cache service initialized with Redis: {settings.redis_url}")
+                        break
+                    except Exception as retry_error:
+                        if attempt < max_retries - 1:
+                            logger.warning(f"Redis connection attempt {attempt + 1} failed, retrying...")
+                            continue
+                        raise retry_error
+            except ImportError:
+                logger.warning("Redis library not installed, caching disabled. Install with: pip install redis")
+                self.enabled = False
             except Exception as e:
                 logger.warning(f"Redis cache not available, falling back to no caching: {e}")
                 self.enabled = False
@@ -91,7 +108,7 @@ class CacheService:
             logger.error(f"Cache get error for key {key}: {e}")
             return None
 
-    def set(self, key: str, value: Any, ttl: int = 1800):
+    def set(self, key: str, value: Any, ttl: int = 1800) -> bool:
         """
         Cache value with TTL.
 
@@ -115,7 +132,7 @@ class CacheService:
             logger.error(f"Cache set error for key {key}: {e}")
             return False
 
-    def delete(self, key: str):
+    def delete(self, key: str) -> None:
         """
         Delete cached value.
 
@@ -131,7 +148,7 @@ class CacheService:
         except Exception as e:
             logger.error(f"Cache delete error for key {key}: {e}")
 
-    def invalidate_pattern(self, pattern: str):
+    def invalidate_pattern(self, pattern: str) -> None:
         """
         Invalidate all keys matching pattern.
 
@@ -149,7 +166,7 @@ class CacheService:
         except Exception as e:
             logger.error(f"Cache invalidate error for pattern {pattern}: {e}")
 
-    def clear(self):
+    def clear(self) -> None:
         """Clear all cache entries for this application."""
         if not self.enabled or not self.redis_client:
             return

@@ -67,6 +67,8 @@ pytest.ini
 !README.md
 !LICENSE
 guides/
+PROJECT_INDEX.md
+PROJECT_INDEX.json
 
 # Scripts (production uses gunicorn directly)
 sync-guides.sh

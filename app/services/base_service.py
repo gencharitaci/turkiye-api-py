@@ -56,22 +56,34 @@ class BaseService:
         if not sort:
             return data
 
+        # Handle empty data
+        if not data:
+            return data
+
         reverse = sort.startswith("-")
         field = sort[1:] if reverse else sort
 
         # Validate field exists in data
-        if data and field not in data[0]:
-            logger.warning(f"Sort field '{field}' not found in data. Available fields: {list(data[0].keys())}")
+        if field not in data[0]:
+            available_fields = ", ".join(sorted(data[0].keys()))
+            logger.warning(f"Sort field '{field}' not found in data. Available fields: {available_fields}")
             raise HTTPException(
-                status_code=400, detail=f"Invalid sort field '{field}'. Field does not exist in the data."
+                status_code=400,
+                detail=f"Invalid sort field '{field}'. Available fields: {available_fields}"
             )
 
         try:
-            return sorted(data, key=lambda x: x.get(field, 0), reverse=reverse)
+            # Sort with proper handling of None values
+            return sorted(
+                data,
+                key=lambda x: (x.get(field) is None, x.get(field, "")),
+                reverse=reverse
+            )
         except (TypeError, KeyError) as e:
             logger.error(f"Sort error on field '{field}': {e}")
             raise HTTPException(
-                status_code=400, detail=f"Cannot sort by field '{field}': invalid field type for sorting"
+                status_code=400,
+                detail=f"Cannot sort by field '{field}': {str(e)}"
             )
 
     def validate_pagination(self, offset: int, limit: int, max_limit: int, max_offset: int = 100000) -> tuple[int, int]:

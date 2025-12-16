@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     # Application Settings
     # ============================================================================
     app_name: str = "Turkiye API"
-    app_version: str = "1.0.0"
+    app_version: str = "1.1.0"
     environment: str = "development"
     debug: bool = False
 
