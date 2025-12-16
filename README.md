@@ -242,7 +242,7 @@ For detailed information about data synchronization, see [DATA_SYNC.md](docs/DAT
 
 ## Advanced Features
 
-For information about advanced features including rate limiting, Redis integration, API versioning, and monitoring, see [ADVANCED_FEATURES.md](ADVANCED_FEATURES.md).
+For information about advanced features including rate limiting, Redis integration, API versioning, and monitoring, see [ADVANCED_FEATURES.md](docs/ADVANCED_FEATURES.md).
 
 ### Quick Overview
 
@@ -378,7 +378,7 @@ tests/
 - ✅ API endpoints (all HTTP methods and error cases)
 - ✅ Security middleware (all OWASP headers)
 
-For detailed testing guide, see [TESTING.md](TESTING.md)
+For detailed testing guide, see [TESTING.md](docs/TESTING.md)
 
 ## Project Structure
 
@@ -406,11 +406,15 @@ turkiye-api-py/
 │   ├── test_middleware/      # Middleware tests
 │   └── conftest.py           # Test fixtures
 ├── docs/                     # Documentation (NEW)
+│   ├── ADVANCED_FEATURES.md  # Advanced features guide
+│   ├── CHANGELOG.md          # Version history
+│   ├── DATA_SYNC.md          # Data synchronization guide
 │   ├── DEPLOYMENT_EN.md      # Deployment guide (English)
 │   ├── DEPLOYMENT_TR.md      # Deployment guide (Turkish)
-│   ├── DATA_SYNC.md          # Data synchronization guide
 │   ├── GUIDES_SYNC.md        # Documentation sync guide
-│   └── PRODUCTION_READINESS.md  # Production checklist
+│   ├── IMPLEMENTATION_SUMMARY.md  # Implementation details
+│   ├── PRODUCTION_READINESS.md    # Production checklist
+│   └── TESTING.md            # Testing guide
 ├── scripts/                  # Utility scripts (NEW)
 │   ├── sync-data.sh          # Data sync script (Linux/Mac)
 │   ├── sync-data.bat         # Data sync script (Windows)
@@ -429,9 +433,6 @@ turkiye-api-py/
 ├── .env.example              # Development environment template
 ├── .env.production.recommended  # Production config template (NEW)
 ├── .pre-commit-config.yaml   # Pre-commit hooks (NEW)
-├── CHANGELOG.md              # Version history (NEW)
-├── TESTING.md                # Testing guide (NEW)
-├── IMPLEMENTATION_SUMMARY.md # Implementation details (NEW)
 ├── README.md                 # This file (English)
 └── README_TR.md              # Turkish README
 ```
