@@ -2,6 +2,7 @@
 Language Negotiation Utilities
 Advanced language negotiation and validation for enterprise i18n support
 """
+
 import re
 from typing import List, Optional, Tuple
 

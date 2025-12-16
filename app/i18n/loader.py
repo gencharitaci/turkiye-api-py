@@ -2,6 +2,7 @@
 i18n Localization Loader
 Loads and caches translation files for multi-language support
 """
+
 import json
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -151,5 +152,4 @@ def translate(language: str, key: str, default: Optional[str] = None) -> str:
 
 def clear_cache():
     """Clear the translations cache (useful for development/testing)"""
-    global _translations_cache
     _translations_cache.clear()
