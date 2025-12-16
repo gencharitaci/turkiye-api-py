@@ -1,0 +1,140 @@
+{
+  "api": {
+    "title": "Türkiye API",
+    "description": "## Overview\n\nThis REST API provides comprehensive data about Turkey's administrative divisions including provinces, districts, neighborhoods, and villages with demographic and geographical information.\\n\\n## Features\\n\\n- 🗺️ Complete geographical data for Turkey\\n- 📊 Population and area statistics\\n- 🔍 Advanced filtering and search capabilities\\n- 📄 Pagination support\\n- 🎯 Field selection for optimized responses\\n\\n## Query Parameters\\n\\nAll list endpoints support:\\n- `name`: Filter by name (partial match)\\n- `minPopulation` / `maxPopulation`: Population range filters\\n- `offset` / `limit`: Pagination\\n- `fields`: Comma-separated fields to return\\n- `sort`: Sort by field (prefix with `-` for descending)\\n\\n## Response Format\\n\\nAll responses follow a consistent JSON format with proper error handling."
+  },
+  "responses": {
+    "successful": "Başarılı Yanıt",
+    "validation_error": "Doğrulama Hatası",
+    "title": "Yanıtlar"
+  },
+  "operations": "İşlemler",
+  "ui": {
+    "search": "Ara",
+    "developer_tools": "Geliştirici Araçları",
+    "share": "Paylaş",
+    "generate_client": "İstemci Oluştur",
+    "try": "Dene",
+    "show_schema": "Şemayı Göster",
+    "test_request": "İsteği Test Et",
+    "open_api_client": "API İstemcisini Aç",
+    "powered_by": "Destekleyen"
+  },
+  "tags": {
+    "provinces": {
+      "name": "İller",
+      "description": "İllerle ilgili işlemler"
+    },
+    "districts": {
+      "name": "İlçeler",
+      "description": "İlçelerle ilgili işlemler"
+    },
+    "neighborhoods": {
+      "name": "Mahalleler",
+      "description": "Mahallelerle ilgili işlemler"
+    },
+    "villages": {
+      "name": "Köyler",
+      "description": "Köylerle ilgili işlemler"
+    },
+    "towns": {
+      "name": "Beldeler",
+      "description": "Beldelerle ilgili işlemler"
+    }
+  },
+  "endpoints": {
+    "root": "Ana Sayfa",
+    "health": "Sağlık Kontrolü",
+    "get_language_preference": "Dil Tercihini Getir",
+    "set_language_preference": "Dil Tercihini Ayarla",
+    "get_supported_languages": "Desteklenen Dilleri Getir",
+    "provinces": {
+      "list": "Tüm illeri getir",
+      "get": "ID'ye göre il getir"
+    },
+    "districts": {
+      "list": "Tüm ilçeleri getir",
+      "get": "ID'ye göre ilçe getir"
+    },
+    "neighborhoods": {
+      "list": "Tüm mahalleleri getir",
+      "get": "ID'ye göre mahalle getir"
+    },
+    "villages": {
+      "list": "Tüm köyleri getir",
+      "get": "ID'ye göre köy getir"
+    },
+    "towns": {
+      "list": "Tüm beldeleri getir",
+      "get": "ID'ye göre belde getir"
+    }
+  },
+  "errors": {
+    "not_found": "Bulunamadı",
+    "method_not_allowed": "Metod izin verilmiyor"
+  },
+  "docs": {
+    "title": "API Dokümantasyonu"
+  },
+  "models": {
+    "title": "Modeller",
+    "http_validation_error": "HTTP Doğrulama Hatası",
+    "validation_error": "Doğrulama Hatası"
+  },
+  "parameters": {
+    "name": "İsim",
+    "minPopulation": "Minimum nüfus",
+    "maxPopulation": "Maksimum nüfus",
+    "minArea": "Minimum alan",
+    "maxArea": "Maksimum alan",
+    "provinceId": "İl ID'si",
+    "province": "İl adı",
+    "districtId": "İlçe ID'si",
+    "district": "İlçe adı",
+    "activatePostalCodes": "Posta kodlarını aktifleştir",
+    "postalCode": "Posta koduna göre filtrele",
+    "offset": "Sayfalama başlangıcı",
+    "limit": "Sayfalama limiti",
+    "fields": "Döndürülecek alanlar (virgülle ayrılmış)",
+    "sort": "Sıralama (azalan için alan adından önce '-' koy)",
+    "id": "ID"
+  },
+  "parameter_descriptions": {
+    "province_name": "İl adı",
+    "district_name": "İlçe adı",
+    "neighborhood_name": "Mahalle adı",
+    "village_name": "Köy adı",
+    "town_name": "Belde adı",
+    "min_population_province": "İlin minimum nüfusu",
+    "max_population_province": "İlin maksimum nüfusu",
+    "min_population_district": "İlçenin minimum nüfusu",
+    "max_population_district": "İlçenin maksimum nüfusu",
+    "min_population_neighborhood": "Mahallenin minimum nüfusu",
+    "max_population_neighborhood": "Mahallenin maksimum nüfusu",
+    "min_population_village": "Köyün minimum nüfusu",
+    "max_population_village": "Köyün maksimum nüfusu",
+    "min_population_town": "Beldenin minimum nüfusu",
+    "max_population_town": "Beldenin maksimum nüfusu",
+    "min_area_province": "İlin minimum alanı",
+    "max_area_province": "İlin maksimum alanı",
+    "min_area_district": "İlçenin minimum alanı",
+    "max_area_district": "İlçenin maksimum alanı",
+    "min_altitude_province": "İlin minimum yüksekliği",
+    "max_altitude_province": "İlin maksimum yüksekliği",
+    "is_coastal": "İl sahil şehri mi değil mi",
+    "is_metropolitan": "İl büyükşehir mi değil mi",
+    "province_id": "İl ID'si",
+    "province_name_filter": "İl adı",
+    "district_id": "İlçe ID'si",
+    "district_name_filter": "İlçe adı",
+    "activate_postal_codes": "Posta kodlarını aktifleştir",
+    "postal_code_filter": "Posta koduna göre filtrele",
+    "offset_list": "Listenin başlangıç noktası",
+    "limit_list": "Liste limiti",
+    "fields_return": "Döndürülecek alanlar (virgülle ayrılmış)",
+    "sort_order": "Sıralama düzeni (azalan sıra için alan adının başına '-' koyun)",
+    "province_id_plate": "İl ID'si / Plaka numarası",
+    "extend_response": "Yanıtı ek verilerle genişlet (mahalleler ve köyler)",
+    "entity_id": "ID"
+  }
+}

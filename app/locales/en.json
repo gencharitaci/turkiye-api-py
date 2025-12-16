@@ -1,0 +1,130 @@
+{
+  "api": {
+    "title": "Turkiye API",
+    "description": "## Overview\\n\\nThis REST API provides comprehensive data about Turkey's administrative divisions including provinces, districts, neighborhoods, and villages with demographic and geographical information.\\n\\n## Features\\n\\n- 🗺️ Complete geographical data for Turkey\\n- 📊 Population and area statistics\\n- 🔍 Advanced filtering and search capabilities\\n- 📄 Pagination support\\n- 🎯 Field selection for optimized responses\\n\\n## Query Parameters\\n\\nAll list endpoints support:\\n- `name`: Filter by name (partial match)\\n- `minPopulation` / `maxPopulation`: Population range filters\\n- `offset` / `limit`: Pagination\\n- `fields`: Comma-separated fields to return\\n- `sort`: Sort by field (prefix with `-` for descending)\\n\\n## Response Format\\n\\nAll responses follow a consistent JSON format with proper error handling."
+  },
+  "responses": {
+    "successful": "Successful Response",
+    "validation_error": "Validation Error",
+    "title": "Responses"
+  },
+  "operations": "Operations",
+  "ui": {
+    "search": "Search",
+    "developer_tools": "Developer Tools",
+    "share": "Share",
+    "generate_client": "Generate Client",
+    "try": "Try",
+    "show_schema": "Show Schema",
+    "test_request": "Test Request",
+    "open_api_client": "Open API Client",
+    "powered_by": "Powered by"
+  },
+  "tags": {
+    "provinces": {
+      "name": "Provinces",
+      "description": "Operations related to provinces"
+    },
+    "districts": {
+      "name": "Districts",
+      "description": "Operations related to districts"
+    },
+    "neighborhoods": {
+      "name": "Neighborhoods",
+      "description": "Operations related to neighborhoods"
+    },
+    "villages": {
+      "name": "Villages",
+      "description": "Operations related to villages"
+    },
+    "towns": {
+      "name": "Towns",
+      "description": "Operations related to towns"
+    }
+  },
+  "endpoints": {
+    "provinces": {
+      "list": "Get all provinces",
+      "get": "Get province by ID"
+    },
+    "districts": {
+      "list": "Get all districts",
+      "get": "Get district by ID"
+    },
+    "neighborhoods": {
+      "list": "Get all neighborhoods",
+      "get": "Get neighborhood by ID"
+    },
+    "villages": {
+      "list": "Get all villages",
+      "get": "Get village by ID"
+    },
+    "towns": {
+      "list": "Get all towns",
+      "get": "Get town by ID"
+    }
+  },
+  "errors": {
+    "not_found": "Not found",
+    "method_not_allowed": "Method not allowed"
+  },
+  "docs": {
+    "title": "API Documentation"
+  },
+  "parameters": {
+    "name": "Name",
+    "minPopulation": "Minimum population",
+    "maxPopulation": "Maximum population",
+    "minArea": "Minimum area",
+    "maxArea": "Maximum area",
+    "provinceId": "Province ID",
+    "province": "Province name",
+    "districtId": "District ID",
+    "district": "District name",
+    "activatePostalCodes": "Activate postal codes",
+    "postalCode": "Filter by postal code",
+    "offset": "Pagination offset",
+    "limit": "Pagination limit",
+    "fields": "Fields to return (comma separated)",
+    "sort": "Sorting (put '-' before field name for descending order)",
+    "id": "ID"
+  },
+  "parameter_descriptions": {
+    "province_name": "The province name",
+    "district_name": "The district name",
+    "neighborhood_name": "The neighborhood name",
+    "village_name": "The village name",
+    "town_name": "The town name",
+    "min_population_province": "The minimum population of the province",
+    "max_population_province": "The maximum population of the province",
+    "min_population_district": "The minimum population of the district",
+    "max_population_district": "The maximum population of the district",
+    "min_population_neighborhood": "The minimum population of the neighborhood",
+    "max_population_neighborhood": "The maximum population of the neighborhood",
+    "min_population_village": "The minimum population of the village",
+    "max_population_village": "The maximum population of the village",
+    "min_population_town": "The minimum population of the town",
+    "max_population_town": "The maximum population of the town",
+    "min_area_province": "The minimum area of the province",
+    "max_area_province": "The maximum area of the province",
+    "min_area_district": "The minimum area of the district",
+    "max_area_district": "The maximum area of the district",
+    "min_altitude_province": "The minimum altitude of the province",
+    "max_altitude_province": "The maximum altitude of the province",
+    "is_coastal": "The province is coastal or not",
+    "is_metropolitan": "The province is metropolitan or not",
+    "province_id": "The province ID",
+    "province_name_filter": "The province name",
+    "district_id": "The district ID",
+    "district_name_filter": "The district name",
+    "activate_postal_codes": "Activate postal codes",
+    "postal_code_filter": "Filter by postal code",
+    "offset_list": "The offset of the list",
+    "limit_list": "The limit of the list",
+    "fields_return": "The fields to be returned (comma separated)",
+    "sort_order": "The sorting order (put '-' before the field name for descending order)",
+    "province_id_plate": "The province ID / plate number",
+    "extend_response": "Extend the response with additional data (neighborhoods and villages)",
+    "entity_id": "The ID"
+  }
+}
