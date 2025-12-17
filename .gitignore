@@ -166,3 +166,19 @@ temp/data-backup-*/
 turkiye-api-py.code-workspace
 PROJECT_INDEX.md
 PROJECT_INDEX.json
+
+# Package build artifacts
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+*.tar.gz
+
+# Package build tools
+.pypirc
+twine.ini
+
+# Test SDK files
+test_sdk.py

@@ -2,7 +2,7 @@
 
 > **Language / Dil**: [English](README.md) | [Türkçe](README_TR.md)
 
-**Version 1.1.0** | **Production Ready** ✅
+**Version 1.1.1** | **Production Ready** ✅
 
 TurkiyeAPI is a comprehensive REST API providing detailed information about Turkey's administrative divisions including provinces, districts, neighborhoods and villages with demographic and geographical data.
 
@@ -93,6 +93,85 @@ pip install pre-commit
 pre-commit install
 ```
 
+## Using as Python SDK
+
+After installing via pip, you can use the package as a Python SDK to interact with any Turkiye API server:
+
+### Installation from PyPI
+
+```bash
+# Install the latest version
+pip install turkiye-api-py
+
+# Or install a specific version
+pip install turkiye-api-py==1.1.1
+```
+
+### Quick Start with SDK
+
+```python
+from app import TurkiyeClient
+
+# Connect to a running API server (you need to have a server running)
+client = TurkiyeClient(base_url="http://localhost:8181")
+
+# Get all provinces
+provinces = client.get_provinces()
+print(f"Total provinces: {len(provinces)}")
+
+# Get Istanbul (ID: 34)
+istanbul = client.get_province(34)
+print(f"{istanbul['name']}: {istanbul['population']:,} people")
+
+# Get districts in Istanbul
+districts = client.get_districts(province_id=34)
+print(f"Istanbul has {len(districts)} districts")
+
+# Filter provinces by population
+large_cities = client.get_provinces(min_population=1000000)
+for city in large_cities:
+    print(f"{city['name']}: {city['population']:,}")
+```
+
+### Running Your Own API Server
+
+To use the SDK, you need an API server running. You can either:
+
+**Option 1: Run the server from the installed package**
+
+```bash
+# Start the server (after pip install)
+turkiye-api serve
+
+# Start with auto-reload for development
+turkiye-api serve --reload
+
+# Start on a custom port
+turkiye-api serve --port 8000
+```
+
+**Option 2: Connect to an existing server**
+
+```python
+from app import TurkiyeClient
+
+# Connect to a remote server
+client = TurkiyeClient(base_url="https://your-api-domain.com")
+provinces = client.get_provinces()
+```
+
+### SDK Features
+
+- **Simple & Pythonic**: Clean, intuitive API
+- **Type Hints**: Full type annotations for better IDE support
+- **Error Handling**: Comprehensive error messages
+- **Context Manager**: Automatic resource cleanup
+- **Pagination**: Built-in pagination support
+- **Filtering**: Advanced filtering options
+- **Language Support**: English and Turkish responses
+
+For complete SDK documentation and examples, see [SDK_USAGE.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/SDK_USAGE.md)
+
 ## Running the Application
 
 ### Development Mode
@@ -130,7 +209,7 @@ chmod +x start-production.sh
 start-production.bat
 ```
 
-For detailed production deployment instructions, see [DEPLOYMENT_EN.md](docs/DEPLOYMENT_EN.md) or [DEPLOYMENT_TR.md](docs/DEPLOYMENT_TR.md)
+For detailed production deployment instructions, see [DEPLOYMENT_EN.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/DEPLOYMENT_EN.md) or [DEPLOYMENT_TR.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/DEPLOYMENT_TR.md)
 
 ## Configuration
 
@@ -213,7 +292,7 @@ The `guides/` folder contains comprehensive documentation synchronized from the 
 scripts\sync-guides.bat
 ```
 
-For detailed information about the sync mechanism, see [GUIDES_SYNC.md](docs/GUIDES_SYNC.md)
+For detailed information about the sync mechanism, see [GUIDES_SYNC.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/GUIDES_SYNC.md)
 
 ## Data Synchronization
 
@@ -238,11 +317,11 @@ scripts\sync-data.bat
 - ✅ Weekly scheduled sync
 - ✅ Manual trigger available
 
-For detailed information about data synchronization, see [DATA_SYNC.md](docs/DATA_SYNC.md)
+For detailed information about data synchronization, see [DATA_SYNC.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/DATA_SYNC.md)
 
 ## Advanced Features
 
-For information about advanced features including rate limiting, Redis integration, API versioning, and monitoring, see [ADVANCED_FEATURES.md](docs/ADVANCED_FEATURES.md).
+For information about advanced features including rate limiting, Redis integration, API versioning, and monitoring, see [ADVANCED_FEATURES.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/ADVANCED_FEATURES.md).
 
 ### Quick Overview
 
@@ -378,7 +457,7 @@ tests/
 - ✅ API endpoints (all HTTP methods and error cases)
 - ✅ Security middleware (all OWASP headers)
 
-For detailed testing guide, see [TESTING.md](docs/TESTING.md)
+For detailed testing guide, see [TESTING.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/TESTING.md)
 
 ## Project Structure
 

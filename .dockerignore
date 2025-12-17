@@ -85,3 +85,15 @@ run.py
 # Logs
 logs/
 *.log
+
+# Package build tools
+.pypirc
+twine.ini
+
+# Test files
+test_sdk.py
+*.test.py
+
+# Additional build artifacts
+*.tar.gz
+.eggs/

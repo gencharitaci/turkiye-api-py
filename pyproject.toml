@@ -1,0 +1,141 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "turkiye-api-py"
+version = "1.1.1"
+description = "Comprehensive REST API and Python SDK for Turkey's administrative divisions with demographic and geographical data"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Adem Kurtipek", email = "gncharitaci@gmail.com"}
+]
+maintainers = [
+    {name = "Adem Kurtipek", email = "gncharitaci@gmail.com"}
+]
+keywords = [
+    "türkiye",
+    "turkiye",
+    "turkiye-api",
+    "turkiye-api-py",
+    "api",
+    "fastapi",
+    "provinces",
+    "districts",
+    "administrative-divisions",
+    "geographic-data",
+    "demographic-data",
+    "rest-api",
+    "sdk"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Framework :: FastAPI",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+
+dependencies = [
+    "fastapi==0.122.0",
+    "uvicorn[standard]==0.38.0",
+    "pydantic==2.12.5",
+    "pydantic-settings==2.12.0",
+    "python-dotenv==1.2.1",
+    "markdown==3.10",
+    "python-frontmatter==1.1.0",
+    "pygments==2.19.2",
+    "python-json-logger==4.0.0",
+    "slowapi==0.1.9",
+    "prometheus-fastapi-instrumentator==7.1.0",
+    "httpx==0.28.1",
+]
+
+[project.optional-dependencies]
+server = [
+    "gunicorn==23.0.0",
+    "redis>=5.0.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.12.0",
+    "isort>=5.13.0",
+    "flake8>=7.0.0",
+    "mypy>=1.8.0",
+    "bandit>=1.7.6",
+    "pre-commit>=3.5.0",
+]
+all = [
+    "turkiye-api-py[server,dev]"
+]
+
+[project.urls]
+Homepage = "https://github.com/gencharitaci/turkiye-api-py"
+Documentation = "https://github.com/gencharitaci/turkiye-api-py#readme"
+Repository = "https://github.com/gencharitaci/turkiye-api-py"
+Issues = "https://github.com/gencharitaci/turkiye-api-py/issues"
+Changelog = "https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/CHANGELOG.md"
+
+[project.scripts]
+turkiye-api = "app.cli:main"
+
+[tool.setuptools]
+packages = ["app", "app.data", "app.i18n", "app.locales", "app.middleware", "app.models", "app.routers", "app.services"]
+
+[tool.setuptools.package-data]
+app = [
+    "data/*.json",
+    "locales/*.json",
+    "*.json",
+]
+
+[tool.black]
+line-length = 120
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["*/tests/*", "*/venv/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]

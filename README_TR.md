@@ -2,7 +2,7 @@
 
 > **Language / Dil**: [English](README.md) | [Türkçe](README_TR.md)
 
-**Versiyon 1.1.0** | **Production Hazır** ✅
+**Versiyon 1.1.1** | **Production Hazır** ✅
 
 TurkiyeAPI, Türkiye'nin il, ilçe, mahalle ve köy gibi idari bölünmeleri hakkında demografik ve coğrafi verilerle birlikte detaylı bilgiler sağlayan kapsamlı bir REST API'dir.
 
@@ -93,6 +93,85 @@ pip install pre-commit
 pre-commit install
 ```
 
+## Python SDK Olarak Kullanım
+
+Pip ile kurduktan sonra, paketi herhangi bir Turkiye API sunucusu ile etkileşim kurmak için Python SDK olarak kullanabilirsiniz:
+
+### PyPI'dan Kurulum
+
+```bash
+# En son sürümü yükle
+pip install turkiye-api-py
+
+# Veya belirli bir sürümü yükle
+pip install turkiye-api-py==1.1.1
+```
+
+### SDK ile Hızlı Başlangıç
+
+```python
+from app import TurkiyeClient
+
+# Çalışan bir API sunucusuna bağlan (çalışan bir sunucuya ihtiyacınız var)
+client = TurkiyeClient(base_url="http://localhost:8181")
+
+# Tüm illeri al
+provinces = client.get_provinces()
+print(f"Toplam il sayısı: {len(provinces)}")
+
+# İstanbul'u al (ID: 34)
+istanbul = client.get_province(34)
+print(f"{istanbul['name']}: {istanbul['population']:,} kişi")
+
+# İstanbul'daki ilçeleri al
+districts = client.get_districts(province_id=34)
+print(f"İstanbul'da {len(districts)} ilçe var")
+
+# Nüfusa göre illeri filtrele
+buyuk_sehirler = client.get_provinces(min_population=1000000)
+for sehir in buyuk_sehirler:
+    print(f"{sehir['name']}: {sehir['population']:,}")
+```
+
+### Kendi API Sunucunuzu Çalıştırma
+
+SDK'yı kullanmak için çalışan bir API sunucusuna ihtiyacınız var. İki seçeneğiniz var:
+
+**Seçenek 1: Yüklü paketten sunucuyu çalıştırın**
+
+```bash
+# Sunucuyu başlat (pip install sonrası)
+turkiye-api serve
+
+# Development için otomatik yeniden yükleme ile başlat
+turkiye-api serve --reload
+
+# Özel bir port'ta başlat
+turkiye-api serve --port 8000
+```
+
+**Seçenek 2: Mevcut bir sunucuya bağlanın**
+
+```python
+from app import TurkiyeClient
+
+# Uzak bir sunucuya bağlan
+client = TurkiyeClient(base_url="https://your-api-domain.com")
+provinces = client.get_provinces()
+```
+
+### SDK Özellikleri
+
+- **Basit & Pythonic**: Temiz, sezgisel API
+- **Type Hints**: Daha iyi IDE desteği için tam tip açıklamaları
+- **Hata Yönetimi**: Kapsamlı hata mesajları
+- **Context Manager**: Otomatik kaynak temizleme
+- **Sayfalama**: Yerleşik sayfalama desteği
+- **Filtreleme**: Gelişmiş filtreleme seçenekleri
+- **Dil Desteği**: İngilizce ve Türkçe yanıtlar
+
+Tam SDK dokümantasyonu ve örnekler için [SDK_USAGE.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/SDK_USAGE.md) dosyasına bakın
+
 ## Uygulamayı Çalıştırma
 
 ### Development Modu
@@ -130,7 +209,7 @@ chmod +x start-production.sh
 start-production.bat
 ```
 
-Detaylı production deployment talimatları için [DEPLOYMENT_TR.md](docs/DEPLOYMENT_TR.md) veya [DEPLOYMENT_EN.md](docs/DEPLOYMENT_EN.md) dosyasına bakın.
+Detaylı production deployment talimatları için [DEPLOYMENT_TR.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/DEPLOYMENT_TR.md) veya [DEPLOYMENT_EN.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/DEPLOYMENT_EN.md) dosyasına bakın.
 
 ## Yapılandırma
 
@@ -213,7 +292,7 @@ Daha fazla detay için `/docs` endpoint'indeki interaktif dokümantasyona bakın
 scripts\sync-guides.bat
 ```
 
-Senkronizasyon mekanizması hakkında detaylı bilgi için [GUIDES_SYNC.md](docs/GUIDES_SYNC.md) dosyasına bakın.
+Senkronizasyon mekanizması hakkında detaylı bilgi için [GUIDES_SYNC.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/GUIDES_SYNC.md) dosyasına bakın.
 
 ## Veri Senkronizasyonu
 
@@ -238,7 +317,7 @@ scripts\sync-data.bat
 - ✅ Haftalık zamanlanmış senkronizasyon
 - ✅ Manuel tetikleme mevcut
 
-Veri senkronizasyonu hakkında detaylı bilgi için [DATA_SYNC.md](docs/DATA_SYNC.md) dosyasına bakın.
+Veri senkronizasyonu hakkında detaylı bilgi için [DATA_SYNC.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/DATA_SYNC.md) dosyasına bakın.
 
 ## API Endpoint'leri
 
@@ -359,7 +438,7 @@ tests/
 - ✅ API endpoint'leri (tüm HTTP metodları ve hata durumları)
 - ✅ Güvenlik middleware (tüm OWASP başlıkları)
 
-Detaylı test rehberi için [TESTING.md](docs/TESTING.md) dosyasına bakın.
+Detaylı test rehberi için [TESTING.md](https://github.com/gencharitaci/turkiye-api-py/blob/master/docs/TESTING.md) dosyasına bakın.
 
 ## Proje Yapısı
 

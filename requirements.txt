@@ -1,30 +1,35 @@
-# Core Framework
-fastapi>=0.100.0
-uvicorn[standard]>=0.20.0
-pydantic>=2.0.0
-pydantic-settings>=2.0.0
-python-dotenv>=1.0.0
+# Core dependencies
+fastapi==0.122.0
+uvicorn==0.38.0
+pydantic==2.12.5
+pydantic-settings==2.12.0
+python-dotenv==1.2.1
+markdown==3.10
+python-frontmatter==1.1.0
+Pygments==2.19.2
+python-json-logger==4.0.0
+slowapi==0.1.9
+prometheus-fastapi-instrumentator==7.1.0
+httpx==0.28.1
 
-# Production Server
-gunicorn>=21.2.0
+# Uvicorn standard dependencies
+httptools==0.7.1
+watchfiles==1.1.1
+websockets==15.0.1
 
-# Documentation
-markdown>=3.0.0
-python-frontmatter>=1.0.0
-pygments>=2.0.0
+# Required by dependencies
+starlette==0.50.0
+anyio==4.12.0
+idna==3.11
+certifi==2025.11.12
+h11==0.16.0
+httpcore==1.0.9
+typing_extensions==4.15.0
+annotated-types==0.7.0
+pydantic_core==2.41.5
+click==8.3.1
+limits==5.6.0
+prometheus_client==0.23.1
 
-# Logging & Observability
-python-json-logger>=2.0.0
-
-# Rate Limiting
-slowapi>=0.1.9
-redis>=5.0.0  # For distributed rate limiting and caching
-
-# Metrics & Monitoring
-prometheus-fastapi-instrumentator>=6.1.0
-
-# Testing (Development)
-pytest>=7.4.0
-pytest-cov>=4.1.0
-pytest-asyncio>=0.21.0
-httpx>=0.24.0
+# Server extras (optional)
+gunicorn==23.0.0
