@@ -2,7 +2,7 @@
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 title: TurkiyeAPI
-description: REST API for Turkey's administrative data
+description: REST API for Türkiye'nin administrative data
 
 hero:
   name: 'TurkiyeAPI'

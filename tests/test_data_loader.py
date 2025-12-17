@@ -24,7 +24,7 @@ class TestDataLoader:
         assert loader is data_loader
 
     def test_provinces_loaded(self, data_loader):
-        """Should load exactly 81 provinces from Turkey."""
+        """Should load exactly 81 provinces from Turkiye."""
         provinces = data_loader.provinces
         assert len(provinces) == 81
         assert all(isinstance(p, dict) for p in provinces)

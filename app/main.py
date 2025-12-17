@@ -66,7 +66,7 @@ app = FastAPI(
     title=settings.app_name,
     description=(
         "This REST API allows you to get data about settlements such as "
-        "provinces, districts, neighborhoods and villages in Turkey."
+        "provinces, districts, neighborhoods and villages in Turkiye."
     ),
     version=settings.app_version,
     docs_url=None,

@@ -20,7 +20,7 @@ class TurkiyeClient:
     """
     Python client for Turkiye API.
 
-    Provides methods to query Turkey's administrative divisions including
+    Provides methods to query Turkiye's administrative divisions including
     provinces, districts, neighborhoods, villages, and towns.
 
     Example:

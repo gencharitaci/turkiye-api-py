@@ -8,7 +8,7 @@ This section answers some of the most commonly asked questions by users.
 
 ## What is TurkiyeAPI?
 
-**TurkiyeAPI** is a comprehensive **REST API** that provides demographic and geographical data about Turkey's administrative divisions (provinces, districts, neighborhoods, and villages). It is designed for developers and researchers who want to explore or work with Turkey's administrative structure.
+**TurkiyeAPI** is a comprehensive **REST API** that provides demographic and geographical data about Turkiye's administrative divisions (provinces, districts, neighborhoods, and villages). It is designed for developers and researchers who want to explore or work with Turkiye's administrative structure.
 
 ## How Do I Use TurkiyeAPI?
 
@@ -20,7 +20,7 @@ TurkiyeAPI is designed as a RESTful API. To use it, simply send HTTP requests. I
 
 ## What Kind of Data Does TurkiyeAPI Provide?
 
-TurkiyeAPI provides various types of data about Turkey’s administrative units, including:
+TurkiyeAPI provides various types of data about  Turkiye’s administrative units, including:
 
 Names, IDs, population figures, and surface areas of provinces, districts, neighborhoods, and villages. It also offers relational data, such as which region a province belongs to, or which province a district is part of.
 

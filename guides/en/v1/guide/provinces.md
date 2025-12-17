@@ -4,7 +4,7 @@ outline: deep
 
 # Provinces
 
-Provinces are the highest-level administrative divisions of Turkey. Turkey has a total of 81 provinces, and each province is divided into a total of 973 districts along with a provincial center. By default, the API lists all provinces according to their IDs, which are also the **license plate codes** of the provinces.
+Provinces are the highest-level administrative divisions of Turkiye.  Turkiye has a total of 81 provinces, and each province is divided into a total of 973 districts along with a provincial center. By default, the API lists all provinces according to their IDs, which are also the **license plate codes** of the provinces.
 
 The entry URL for provinces is: `/v1/provinces`.
 

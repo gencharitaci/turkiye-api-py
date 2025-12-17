@@ -4,7 +4,7 @@ This document explains how the `app/data/` folder is kept in sync with the upstr
 
 ## Overview
 
-The `app/data/` folder contains critical JSON data files (provinces, districts, neighborhoods, villages, towns) from the original turkiye-api repository. To keep this data up to date with the latest administrative changes in Turkey, we have automated synchronization mechanisms.
+The `app/data/` folder contains critical JSON data files (provinces, districts, neighborhoods, villages, towns) from the original turkiye-api repository. To keep this data up to date with the latest administrative changes in Turkiye, we have automated synchronization mechanisms.
 
 ## Data Files
 
@@ -12,7 +12,7 @@ The following JSON files are synchronized:
 
 ```
 app/data/
-├── provinces.json       # 81 provinces of Turkey
+├── provinces.json       # 81 provinces of Turkiye
 ├── districts.json       # 973 districts
 ├── neighborhoods.json   # Neighborhoods data
 ├── villages.json        # Villages data

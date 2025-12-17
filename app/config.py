@@ -10,7 +10,7 @@ used throughout the application to avoid magic numbers and improve maintainabili
 # ============================================================================
 
 # Maximum number of results per resource type
-MAX_LIMIT_PROVINCES = 81  # Only 81 provinces in Turkey
+MAX_LIMIT_PROVINCES = 81  # Only 81 provinces in Turkiye
 MAX_LIMIT_DISTRICTS = 1000
 MAX_LIMIT_NEIGHBORHOODS = 50000  # Approximately 50,000 neighborhoods
 MAX_LIMIT_VILLAGES = 50000  # Approximately 50,000 villages
@@ -41,7 +41,7 @@ DEFAULT_MAX_AREA = 1_000_000_000  # 1 billion km² (theoretical maximum)
 
 # Altitude bounds (in meters)
 DEFAULT_MIN_ALTITUDE = 0  # Sea level
-DEFAULT_MAX_ALTITUDE = 10_000  # 10,000 meters (theoretical maximum for Turkey)
+DEFAULT_MAX_ALTITUDE = 10_000  # 10,000 meters (theoretical maximum for Turkiye)
 
 
 # ============================================================================

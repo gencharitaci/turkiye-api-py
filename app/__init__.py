@@ -1,8 +1,8 @@
 """
-Turkiye API - Comprehensive REST API and Python SDK for Turkey's administrative divisions.
+Turkiye API - Comprehensive REST API and Python SDK for Turkiye's administrative divisions.
 
 This package provides:
-1. A FastAPI-based REST API server for Turkey's administrative data
+1. A FastAPI-based REST API server for Turkiye's administrative data
 2. A Python SDK client for programmatic access to the API
 
 Usage as Server:

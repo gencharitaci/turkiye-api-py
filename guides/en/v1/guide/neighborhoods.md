@@ -4,7 +4,7 @@ outline: deep
 
 # Neighborhoods
 
-Neighborhoods are administrative units that come after districts in Turkey's administrative divisions. Each district is divided into one or more neighborhoods. There are a total of 32,186 neighborhoods in Turkey. By default, the API lists all neighborhoods first by the provinces they belong to, then by the districts they belong to, and finally by their names.
+Neighborhoods are administrative units that come after districts in Turkiye's administrative divisions. Each district is divided into one or more neighborhoods. There are a total of 32,186 neighborhoods in Turkiye. By default, the API lists all neighborhoods first by the provinces they belong to, then by the districts they belong to, and finally by their names.
 
 The entry URL for neighborhoods is: `/v1/neighborhoods`.
 

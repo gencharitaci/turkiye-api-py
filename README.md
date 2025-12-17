@@ -4,7 +4,7 @@
 
 **Version 1.1.1** | **Production Ready** ✅
 
-TurkiyeAPI is a comprehensive REST API providing detailed information about Turkey's administrative divisions including provinces, districts, neighborhoods and villages with demographic and geographical data.
+TurkiyeAPI is a comprehensive REST API providing detailed information about Turkiye's administrative divisions including provinces, districts, neighborhoods and villages with demographic and geographical data.
 
 This is a Python/FastAPI implementation based on the original [turkiye-api](https://github.com/ubeydeozdmr/turkiye-api) project by [Ubeyde Emir Özdemir](https://github.com/ubeydeozdmr), licensed under the MIT License.
 

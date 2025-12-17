@@ -7,7 +7,7 @@ FROM python:3.13-slim
 # Metadata
 LABEL maintainer="Adem Kurtipek <gncharitaci@gmail.com>"
 LABEL version="1.1.0"
-LABEL description="Turkiye API - FastAPI-based REST API for Turkey administrative data"
+LABEL description="Turkiye API - FastAPI-based REST API for Turkiye administrative data"
 
 # Set working directory
 WORKDIR /app

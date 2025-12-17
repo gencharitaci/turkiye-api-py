@@ -4,7 +4,7 @@ outline: deep
 
 # Villages
 
-Villages are the administrative units that come after districts among Turkey's administrative divisions. Each district is divided into one or more villages. There are more than 18,000 villages in Turkey. By default, the API lists all villages first by the provinces they belong to, then by the districts they belong to, and then by their names.
+Villages are the administrative units that come after districts among Turkiye's administrative divisions. Each district is divided into one or more villages. There are more than 18,000 villages in Turkiye. By default, the API lists all villages first by the provinces they belong to, then by the districts they belong to, and then by their names.
 
 ::: info INFO
 The provinces that villages belong to are not metropolitan municipalities. (`isMetropolitan: false`)

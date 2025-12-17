@@ -109,7 +109,7 @@ def info():
 def main():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
-        description="Turkiye API - Comprehensive REST API for Turkey's administrative divisions",
+        description="Turkiye API - Comprehensive REST API for Turkiye's administrative divisions",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

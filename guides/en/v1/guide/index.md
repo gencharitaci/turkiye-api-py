@@ -4,7 +4,7 @@ outline: deep
 
 # Welcome
 
-**TurkiyeAPI** is a comprehensive **REST API** that provides demographic and geographic data about Turkey’s administrative divisions (provinces, districts, neighborhoods, and villages).
+**TurkiyeAPI** is a comprehensive **REST API** that provides demographic and geographic data about  Turkiye’s administrative divisions (provinces, districts, neighborhoods, and villages).
 
 This guide explains the features of TurkiyeAPI and how to use it in detail.
 

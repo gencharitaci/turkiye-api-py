@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "turkiye-api-py"
 version = "1.1.1"
-description = "Comprehensive REST API and Python SDK for Turkey's administrative divisions with demographic and geographical data"
+description = "Comprehensive REST API and Python SDK for Turkiye's administrative divisions with demographic and geographical data"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
