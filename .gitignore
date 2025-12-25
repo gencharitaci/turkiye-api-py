@@ -158,7 +158,7 @@ logs/
 temp/*
 
 # Docker volumes (if any local mounts)
-data/
+# data/
 redis_data/
 temp/turkiye-api-sync/
 temp/data-backup-*/
